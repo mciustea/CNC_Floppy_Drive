@@ -1,6 +1,6 @@
 #include <Stepper.h>
  
- const int stepsPerRevolution = 20;  // change this to fit the number of steps per revolution
+ const int stepsPerRevolution = 53.33;  // change this to fit the number of steps per revolution
                           // for your motor
  float pasi = 20;         //PASI PE COMANDA
  int comanda = 0; 
@@ -115,6 +115,19 @@ void setup() {
     {
     desenPatrat(50);
     }
+    
+    if(comandafin == 49){
+    parabola(-50, 50);
+    }
+    
+    if(comandafin == 50){
+    parabolaX3(-20, 20);
+    }
+    
+    if(comandafin == 51){
+    parabolaX4(-10, 10);
+    }
+    
      motorsStop();
   }
 }
@@ -194,8 +207,37 @@ void desenPatrat(int marime){
  pMotorSt(marime);
  pMotorSp(marime);
 }
-//==============================
+//============================== Parabola X^2
 
+void parabola(int xStart, int xFin){
+  for(int i = xStart; i <= xFin; i++){
+  pMotorSp(1);
+  pMotorDr((2*i + 1)/ 10 );
+  Serial.println((2*i + 1)/10); 
+  }
+}
+//============================== Parabola X^3
+
+void parabolaX3(int xStart, int xFin){
+  for(int i = xStart; i <= xFin; i++){
+  pMotorSp(1);
+  int calculMiscare = (6*i + 1)/ 10;
+  int movement = pow(calculMiscare, 2) ;
+  int movementAbsolut = pow(movement, 0.5);
+  pMotorDr(-movementAbsolut);
+  Serial.println("Parabola X^3");
+  Serial.println(movementAbsolut); 
+  }
+}
+//============================== Parabola X^4
+
+void parabolaX4(int xStart, int xFin){
+  for(int i = xStart; i <= xFin; i++){
+  pMotorSp(2);
+  pMotorDr((24*i + 1)/ 10 );
+  Serial.println((24*i + 1)/10); 
+  }
+}
 void motorsStart(){
   digitalWrite(EnA, HIGH);
   digitalWrite(EnB, HIGH);
