@@ -2,9 +2,10 @@
  
  const int stepsPerRevolution = 20;  // change this to fit the number of steps per revolution
                           // for your motor
- float pasi = 20;
+ float pasi = 20;         //PASI PE COMANDA
  int comanda = 0; 
- int comandafin = 0; 
+ int comandafin = 0;
+ float speed = 50;        //VITEZA PE COMANDA
  //int Stanga;
  //int Dreapta;
  //int Sus;
@@ -36,8 +37,8 @@ void setup() {
  // initialize the serial port:
 
  // set the motor speed (for multiple steps only):
- myStepperX.setSpeed(50);
- myStepperZ.setSpeed(50);
+ myStepperX.setSpeed(speed);
+ myStepperZ.setSpeed(speed);
  }
 
  
@@ -195,7 +196,6 @@ void desenPatrat(int marime){
 }
 //==============================
 
-//Test procedure
 void motorsStart(){
   digitalWrite(EnA, HIGH);
   digitalWrite(EnB, HIGH);
