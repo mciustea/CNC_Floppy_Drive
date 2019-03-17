@@ -60,6 +60,7 @@ void setup() {
     comandafin = comanda - '0';
     Serial.print("Received: ");
     Serial.print(comandafin);
+    motorsStart();
     if (comandafin == 4)
     {
       MotorSt();
@@ -111,12 +112,7 @@ void setup() {
       MotorSt();
       Serial.println(" => Stanga Spate");
     }
-    
-    
-     if(comandafin != 1)
-    {
-      comandafin = 0;
-    }
+     motorsStop();
   }
 }
 
@@ -130,6 +126,7 @@ void MotorSt()
   myStepperZ.step(25);
 }
 
+
 void MotorFt()
 {
   myStepperX.step(25);
@@ -140,4 +137,16 @@ void MotorSp()
   myStepperX.step(-25);
 }
 
+void motorsStart(){
+digitalWrite(EnA, HIGH);
+ digitalWrite(EnB, HIGH);
+ digitalWrite(En2A, HIGH);
+ digitalWrite(En2B, HIGH);
+}
+
+void motorsStop(){
+digitalWrite(EnA, LOW);
+ digitalWrite(EnB, LOW);
+ digitalWrite(En2A, LOW);
+ digitalWrite(En2B, LOW);}
    
