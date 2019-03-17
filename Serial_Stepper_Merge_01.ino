@@ -1,7 +1,8 @@
 #include <Stepper.h>
  
- const int stepsPerRevolution = 48;  // change this to fit the number of steps per revolution
+ const int stepsPerRevolution = 20;  // change this to fit the number of steps per revolution
                           // for your motor
+ float pasi = 20;
  int comanda = 0; 
  int comandafin = 0; 
  //int Stanga;
@@ -28,15 +29,15 @@ void setup() {
  pinMode(En2A, OUTPUT);
  pinMode(En2B, OUTPUT);
  
- digitalWrite(EnA, HIGH);
- digitalWrite(EnB, HIGH);
- digitalWrite(En2A, HIGH);
- digitalWrite(En2B, HIGH);
+ //digitalWrite(EnA, HIGH);
+ //digitalWrite(EnB, HIGH);
+ //digitalWrite(En2A, HIGH);
+//digitalWrite(En2B, HIGH);
  // initialize the serial port:
 
  // set the motor speed (for multiple steps only):
- myStepperX.setSpeed(250);
- myStepperZ.setSpeed(250);
+ myStepperX.setSpeed(50);
+ myStepperZ.setSpeed(50);
  }
 
  
@@ -88,65 +89,124 @@ void setup() {
     
     if(comandafin == 7)
     {
-      MotorFt();
-      MotorSt();
+      SusSt(25);
       Serial.println(" => Stanga Fata");
     }
     if(comandafin == 9)
     {
-      MotorFt();
-      MotorDr();
+      SusDr(25);
       Serial.println(" => Dreapta Fata");
     }
     
     if(comandafin == 3)
     {
-      MotorSp();
-      MotorDr();
+      JosDr(25);
       Serial.println(" => Dreapta Spate");
     }
     
     if(comandafin == 1)
     {
-      MotorSp();
-      MotorSt();
+      JosSt(25);
       Serial.println(" => Stanga Spate");
+    }
+    
+    if(comandafin == 0)
+    {
+    desenPatrat(50);
     }
      motorsStop();
   }
 }
-
+//============================= Simplu
 void MotorDr()
 {
-  myStepperZ.step(-25);
+  myStepperZ.step(-pasi);
 }
 
 void MotorSt()
 {
-  myStepperZ.step(25);
+  myStepperZ.step(pasi);
 }
 
 
 void MotorFt()
 {
-  myStepperX.step(25);
+  myStepperX.step(pasi);
 }
 
 void MotorSp()
 {
-  myStepperX.step(-25);
+  myStepperX.step(-pasi);
 }
 
+//============================== Parametri
+void pMotorDr(int parametru)
+{
+  myStepperZ.step(-parametru);
+}
+
+void pMotorSt(int parametru)
+{
+  myStepperZ.step(parametru);
+}
+
+
+void pMotorFt(int parametru)
+{
+  myStepperX.step(parametru);
+}
+
+void pMotorSp(int parametru)
+{
+  myStepperX.step(-parametru);
+}
+//============================= Diagonale 
+void SusSt(int parametru){
+ for(int i = 1; i <= parametru; i++){
+  pMotorFt(1);
+  pMotorSt(1); 
+  }
+}
+
+void SusDr(int parametru){
+ for(int i = 1; i <= parametru; i++){
+  pMotorFt(1);
+  pMotorDr(1); 
+  }
+}
+void JosSt(int parametru){
+ for(int i = 1; i <= parametru; i++){
+  pMotorSp(1);
+  pMotorSt(1); 
+  }
+}
+void JosDr(int parametru){
+ for(int i = 1; i <= parametru; i++){
+  pMotorSp(1);
+  pMotorDr(1); 
+  }
+}
+//============================== Patrat
+void desenPatrat(int marime){
+ pMotorDr(marime);
+ pMotorFt(marime);
+ pMotorSt(marime);
+ pMotorSp(marime);
+}
+//==============================
+
+//Test procedure
 void motorsStart(){
-digitalWrite(EnA, HIGH);
- digitalWrite(EnB, HIGH);
- digitalWrite(En2A, HIGH);
- digitalWrite(En2B, HIGH);
+  digitalWrite(EnA, HIGH);
+  digitalWrite(EnB, HIGH);
+  digitalWrite(En2A, HIGH);
+  digitalWrite(En2B, HIGH);
 }
 
 void motorsStop(){
-digitalWrite(EnA, LOW);
- digitalWrite(EnB, LOW);
- digitalWrite(En2A, LOW);
- digitalWrite(En2B, LOW);}
+  digitalWrite(EnA, LOW);
+  digitalWrite(EnB, LOW);
+  digitalWrite(En2A, LOW);
+  digitalWrite(En2B, LOW);
+}
    
